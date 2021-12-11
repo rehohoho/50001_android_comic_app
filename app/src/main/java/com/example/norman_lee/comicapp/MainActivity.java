@@ -3,6 +3,8 @@ package com.example.norman_lee.comicapp;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,22 +49,34 @@ public class MainActivity extends AppCompatActivity {
         //TODO 6.1 Ensure that Android Manifest has permissions for internet and has orientation fixed
         //TODO 6.2 Get references to widgets
         //TODO 6.3 Set up setOnClickListener for the button
+
         //TODO 6.4 Retrieve the user input from the EditText
-        //TODO 6.5 - 6.9 Modify GetComic below
-        //TODO 6.10 If network is active, instantiate GetComic and call the execute method
+        //TODO 6.5 - 6.9 Modify getComic below
+        //TODO 6.10 If network is active, call the getComic method with the userInput
 
     }
+
 
     //TODO 6.5 - 6.9 ****************
-    //TODO you are reminded that this is an inner class
-    //TODO 6.5 Make GetComic extend AsyncTask<String, String, Bitmap>
-    //TODO 6.6 (doInBackground)Call Utils.getImageURLFromXkcdApi to get the image URL from comicNo
-    //TODO 6.7 (onProgressUpdate, doInBackground) Call publishProgress, write code to update textViewTitle with the image URL
-    //TODO 6.8 (doInBackground)Call Utils.getBitmap using the URL to get the bitmap
-    //TODO 6.9 (onPostExecute)Assign the Bitmap downloaded to imageView. The bitmap may be null.
-    class GetComic {
+    //TODO you are reminded that new Runnable{} is an anonymous inner class
+    //TODO 6.5 Make sure getComic has the signature getComic(final String userInput); make sure an executor and a handler are instantiated
+    //TODO 6.6 (background work) create a final Container<Bitmap> cBitmap object which will be used for commmunication between the main thread and the child thread
+    //TODO 6.7 (background work) Call Utils.getImageURLFromXkcdApi to get the image URL from comicNo
+    //TODO 6.8 (background work)Call Utils.getBitmap using the URL to get the bitmap
+    //TODO 6.9 (UI thread work)Assign the Bitmap downloaded to imageView. The bitmap may be null.
 
 
+    void getComic(final String userInput) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        final Handler handler = new Handler(Looper.getMainLooper());
     }
 
+    class Container<T> {
+        T value;
+        Container() {
+            this.value = null;
+        }
+        void set(T x) { this.value = x; }
+        T get() { return this.value; }
+    }
 }
