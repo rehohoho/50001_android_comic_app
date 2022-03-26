@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
             if (Utils.isNetworkAvailable(MainActivity.this)) {
                 // getComic(comicNo);
                 updateComicSubroutine.start(comicNo);
+            } else {
+                Log.e(TAG, ERROR_NO_NETWORK);
             }
         });
 
@@ -88,8 +91,10 @@ public class MainActivity extends AppCompatActivity {
                 bitmapContainer.set(Utils.getBitmap(new URL(res.first)));
                 titleContainer.set(res.second);
             } catch (IOException e) {
+                Log.e(TAG, ERROR_HTTPS_ERROR);
                 e.printStackTrace();
             } catch (JSONException e) {
+                Log.e(TAG, ERROR_BAD_JSON);
                 e.printStackTrace();
             }
 
