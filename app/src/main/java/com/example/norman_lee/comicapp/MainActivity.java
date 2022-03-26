@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     Button buttonGetComic;
     TextView textViewTitle;
     ImageView imageViewComic;
+    UpdateComicSubroutine updateComicSubroutine;
 
     String comicNo;
     public static final String TAG = "Logcat";
@@ -46,13 +47,16 @@ public class MainActivity extends AppCompatActivity {
         textViewTitle = findViewById(R.id.textViewTitle);
         imageViewComic = findViewById(R.id.imageViewComic);
 
+        updateComicSubroutine = new UpdateComicSubroutine(imageViewComic, textViewTitle);
+
         //TODO 6.3 Set up setOnClickListener for the button
 
         //TODO 6.4 Retrieve the user input from the EditText
         buttonGetComic.setOnClickListener(view -> {
             comicNo = editTextComicNo.getText().toString();
             if (Utils.isNetworkAvailable(MainActivity.this)) {
-                getComic(comicNo);
+                // getComic(comicNo);
+                updateComicSubroutine.start(comicNo);
             }
         });
 
@@ -96,14 +100,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         });
-    }
-
-    class Container<T> {
-        T value;
-        Container() {
-            this.value = null;
-        }
-        void set(T x) { this.value = x; }
-        T get() { return this.value; }
     }
 }
