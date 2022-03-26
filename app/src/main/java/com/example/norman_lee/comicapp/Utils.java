@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 import android.util.MalformedJsonException;
+import android.util.Pair;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -191,15 +192,19 @@ public class Utils {
      * @param  comicNo a String containing the comicNo
      * @return a String containing the JSON response
      */
-    static String getImageURLFromXkcdApi(String comicNo)
+    static Pair<String, String> getImageURLFromXkcdApi(String comicNo)
             throws IOException, JSONException{
 
         final String xkcdImageKey = "img";
+        final String xkcdTitleKey = "title";
 
         URL url = buildURL(comicNo);
         String jsonString = getJson(url);
         JSONObject jsonObject = new JSONObject(jsonString);
-        return jsonObject.getString(xkcdImageKey);
+        return new Pair<>(
+            jsonObject.getString(xkcdImageKey),
+            jsonObject.getString(xkcdTitleKey)
+        );
     }
 
 }
